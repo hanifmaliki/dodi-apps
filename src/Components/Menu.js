@@ -18,11 +18,9 @@ const pages = [
     { name: 'User List', path: "/user-list" },
     { name: 'Logs', path: "/logs" }
 ];
-const settings = [
-    { name: 'Logout', path: "/login" }
-];
+const settings = ['Logout'];
 
-function MenuBar() {
+function MenuBar({ userData }) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const navigate = useNavigate();
@@ -48,7 +46,10 @@ function MenuBar() {
     }
 
     const handleOnClickUserMenu = (setting) => {
-        navigate(setting.path);
+        setting === "Logout" && (() => {
+            localStorage.setItem('token', '')
+            navigate('/login');
+        })()
         setAnchorElUser(null);
     }
 
@@ -147,7 +148,7 @@ function MenuBar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={userData.email?.toUpperCase()} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -166,9 +167,9 @@ function MenuBar() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.name} onClick={() => handleOnClickUserMenu(setting)}>
-                                    <Typography textAlign="center">{setting.name}</Typography>
+                            {settings.map((setting, idx) => (
+                                <MenuItem key={idx} onClick={() => handleOnClickUserMenu(setting)}>
+                                    <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
