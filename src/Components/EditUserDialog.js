@@ -8,6 +8,25 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 const EditUserDialog = ({ isOpen, setIsOpen }) => {
+    const [name, setName] = React.useState('')
+    const [age, setAge] = React.useState('')
+    const [email, setEmail] = React.useState('')
+    const [password, setPassword] = React.useState('')
+
+    const handleSubmit = () => {
+        if (validateForm()) {
+            setIsOpen(false);
+        }
+    }
+
+    const validateForm = () => {
+        if (name === '' || age === '' || email === '' || password === '') {
+            alert('Please fill all forms.')
+            return false
+        }
+        return true
+    }
+
     const handleClose = () => {
         setIsOpen(false);
     };
@@ -27,6 +46,8 @@ const EditUserDialog = ({ isOpen, setIsOpen }) => {
                     type="text"
                     fullWidth
                     variant="standard"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                 />
                 <TextField
                     autoFocus
@@ -36,6 +57,8 @@ const EditUserDialog = ({ isOpen, setIsOpen }) => {
                     type="number"
                     fullWidth
                     variant="standard"
+                    value={age}
+                    onChange={(e) => setAge(e.target.value)}
                 />
                 <TextField
                     autoFocus
@@ -45,6 +68,8 @@ const EditUserDialog = ({ isOpen, setIsOpen }) => {
                     type="email"
                     fullWidth
                     variant="standard"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <TextField
                     autoFocus
@@ -54,11 +79,13 @@ const EditUserDialog = ({ isOpen, setIsOpen }) => {
                     type="password"
                     fullWidth
                     variant="standard"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Cancel</Button>
-                <Button onClick={handleClose}>Submit</Button>
+                <Button onClick={handleSubmit}>Submit</Button>
             </DialogActions>
         </Dialog>
     );
